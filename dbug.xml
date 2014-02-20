@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system">
+	<name>System - Dump Variables</name>
+	<author>Gerald R. Zalsos</author>
+	<creationDate>March 2012</creationDate>
+	<copyright>Copyright (C) 2012. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@geraldzalsos.com</authorEmail>
+	<authorUrl>http://www.geraldzalsos.com</authorUrl>
+	<version>2.5.0</version>	
+	<files>
+		<filename plugin="dbug">dbug.php</filename>
+		<filename>index.html</filename>
+		<folder>dbug</folder>
+	</files>
+	<config>
+		<fields name="params">
+
+			<fieldset name="basic">
+				<field name="type" type="list" default="all" label="Show Debug" description="Filter to show debug base on the selected options.">
+					<option value="all">Show All</option>
+					<option value="ip">Show By IPs</option>
+					<option value="userid">Show By User IDs</option>
+				</field>
+				<field name="ip" type="text"
+				default=""
+				description="CSV of user IPs to show if selected Show By IP"
+				label="Users IPs"
+				size="50"
+				/>
+				<field name="userid" type="text"
+				default=""
+				description="CSV of user ids to show if selected Show By User IDs"
+				label="Users IDs"
+				size="50"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
