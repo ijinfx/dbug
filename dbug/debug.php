@@ -1,12 +1,4 @@
 <?php
-/**
- * @package dBug Plugin for Joomla!
- * @version 1.00.0
- * @author Gerald R. Zalsos
- * @copyright (C) 2014- Gerald R. Zalsos
- * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
-**/
-
 /*********************************************************************************************************************\
  * LAST UPDATE
  * ============
@@ -54,7 +46,7 @@
  * 
 \*********************************************************************************************************************/
 
-// no direct access
+/** ensure this file is being included by a parent file */
 defined('_JEXEC') or die('Restricted access');
 
 class dBug {
@@ -82,7 +74,7 @@ class dBug {
 		//include js and css scripts
 		if(!defined('BDBUGINIT')) {
 			define("BDBUGINIT", TRUE);			
-			$doc =& JFactory::getDocument();			
+			$doc = JFactory::getDocument();			
 			$doc->addStyleSheet( JURI::root(true).'/plugins/system/dbug/dbug/debug.css');		
 			$doc->addScript( JURI::root(true).'/plugins/system/dbug/dbug/debug.js');		
 		}

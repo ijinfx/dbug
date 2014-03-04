@@ -1,11 +1,25 @@
 <?php
 /**
- * @package dBug Plugin for Joomla!
- * @version 1.00.0
- * @author Gerald R. Zalsos
- * @copyright (C) 2014- Gerald R. Zalsos
- * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
-**/
+ * @version 1.5/1.6
+ * @package dBug
+ * @author  Gerald Zalsos
+ * @link    http://www.geraldzalsos.com
+ * @copyright Copyright (C) 2011 GeraldZalsos.com. All rights reserved.
+ * @license GNU General Public License version 2 or later
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /** ensure this file is being included by a parent file */
 defined('_JEXEC') or die('Restricted access');
@@ -15,16 +29,20 @@ jimport('joomla.plugin.plugin');
 
 class plgSystemDbug extends JPlugin {
 
-	public function plgSystemDbug(&$subject, $config) {
-		parent::__construct($subject, $config);
-	}
+	/**
+	 * Load the language file on instantiation.
+	 *
+	 * @var    boolean
+	 * @since  3.1
+	 */
+	protected $autoloadLanguage = true;
 	
 	public static function triggerDbug()
 	{
 		// Get plugin info
-    	$plugin =& JPluginHelper::getPlugin('system', 'dbug');    	
+    	$plugin = JPluginHelper::getPlugin('system', 'dbug'); 	
 		
-		if (version_compare(JVERSION,'1.6.0','ge')) {				    
+		if (version_compare(JVERSION,'1.6.0','ge')) {			    
 			$params = new JRegistry( $plugin->params );
 			$path = JPATH_SITE . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'debug.php';
 		} else {
@@ -41,7 +59,7 @@ class plgSystemDbug extends JPlugin {
 			}
 		}	
 	}
-
+	
 	private static function includeFile($params) {
 		$type = $params->def('type', 'all');		
 		$allow = false;
@@ -49,7 +67,17 @@ class plgSystemDbug extends JPlugin {
 			case 'ip' :
 				$explodeIP = explode(',', $params->def('ip'));				
 				if(is_array($explodeIP)) {
-					$ip = plgSystemDbug::getRealIpAddr();					
+					$ip = '';	
+					if (!empty($_SERVER['HTTP_CLIENT_IP']))//check ip from share internet
+					{
+						$ip = $_SERVER['HTTP_CLIENT_IP'];
+					} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))//to check ip is pass from proxy
+					{
+						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+					} else {
+						$ip = $_SERVER['REMOTE_ADDR'];
+					}					
+									
 					if(in_array($ip, $explodeIP) || $ip == '127.0.0.1') //always show localhost
 						$allow = true;
 				}							
@@ -71,6 +99,20 @@ class plgSystemDbug extends JPlugin {
 						$allow = true;
 				}					
 				break;
+			case 'access':
+				$access = $params->get('access');				
+				$authorisedlevels = JFactory::getUser()->getAuthorisedViewLevels();
+										
+				if(in_array($access, $authorisedlevels)) $allow = true;
+							
+				break;	
+			case 'usergroup':
+				$usergroups = $params->get('usergroup');				
+				$authorisedgroups = JFactory::getUser()->getAuthorisedGroups();
+							
+				if (array_intersect($authorisedgroups, $usergroups)) $allow = true;					
+			
+				break;	
 			case 'all' :
 			default :
 				$allow = true;
@@ -78,19 +120,6 @@ class plgSystemDbug extends JPlugin {
 		}
 
 		return $allow;
-	}
-
-	private static function getRealIpAddr() {
-		if (!empty($_SERVER['HTTP_CLIENT_IP']))//check ip from share internet
-		{
-			$ip = $_SERVER['HTTP_CLIENT_IP'];
-		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))//to check ip is pass from proxy
-		{
-			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} else {
-			$ip = $_SERVER['REMOTE_ADDR'];
-		}
-		return $ip;
 	}
 }
 

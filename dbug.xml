@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
-	<name>System - Dump Variables</name>
+	<name>PLG_SYSTEM_DBUG</name>
 	<author>Gerald R. Zalsos</author>
 	<creationDate>March 2012</creationDate>
 	<copyright>Copyright (C) 2012. All rights reserved.</copyright>
@@ -8,32 +8,50 @@
 	<authorEmail>info@geraldzalsos.com</authorEmail>
 	<authorUrl>http://www.geraldzalsos.com</authorUrl>
 	<version>1.0.0</version>
-	<description>PHP version of ColdFusion’s cfdump. Outputs colored and structured tabular variable information.</description>	
+	<description>PLG_SYSTEM_DBUG_XML_DESCRIPTION</description>
+		
 	<files>
 		<filename plugin="dbug">dbug.php</filename>
 		<filename>index.html</filename>
 		<folder>dbug</folder>
 	</files>
+	
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_system_dbug.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_system_dbug.sys.ini</language>
+	</languages>
+	
 	<config>
 		<fields name="params">
+
 			<fieldset name="basic">
-				<field name="type" type="list" default="all" label="Show Debug" description="Filter to show debug base on the selected options.">
-					<option value="all">Show All</option>
-					<option value="ip">Show By IPs</option>
-					<option value="userid">Show By User IDs</option>
+				<field name="type" type="list" default="all" label="PLG_SYSTEM_DBUG_FIELD_TYPE_LABEL" description="PLG_SYSTEM_DBUG_FIELD_TYPE_DESCRIPTION">
+					<option value="all">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_ALL</option>
+					<option value="ip">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_IPS</option>
+					<option value="access">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_ACCESS_LEVEL</option>
+					<option value="usergroup">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_USER_GROUPS</option>
 				</field>
 				<field name="ip" type="text"
 				default=""
-				description="CSV of user IPs to show if selected Show By IP"
-				label="Users IPs"
+				description="PLG_SYSTEM_DBUG_FIELD_IP_DESCRIPTION"
+				label="PLG_SYSTEM_DBUG_FIELD_IP_LABEL"
 				size="50"
 				/>
 				<field name="userid" type="text"
 				default=""
-				description="CSV of user ids to show if selected Show By User IDs"
-				label="Users IDs"
+				description="PLG_SYSTEM_DBUG_FIELD_USERID_DESCRIPTION"
+				label="PLG_SYSTEM_DBUG_FIELD_USERID_LABEL"
 				size="50"
 				/>
+				<field class="small" name="access" type="accesslevel"
+		        label="JFIELD_ACCESS_LABEL"
+		        description="JFIELD_ACCESS_DESC"		        
+		        />
+		        <field name="usergroup" type="usergroup"
+		        label="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_LABEL"
+		        description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESCRIPTION" 
+		        multiple="true" 
+		        />
 			</fieldset>
 		</fields>
 	</config>
