@@ -16,19 +16,18 @@ jimport('joomla.plugin.plugin');
 
 class plgSystemDbug extends JPlugin {
 
-	function plgSystemDbug(&$subject, $config) {
+	public function plgSystemDbug(&$subject, $config) {
 		parent::__construct($subject, $config);
 	}
 	
-	function triggerDbug()
+	public static function triggerDbug()
 	{
 		// Get plugin info
     	$plugin =& JPluginHelper::getPlugin('system', 'dbug');    	
 		
-		if (version_compare(JVERSION,'1.6.0','ge')) {
-			if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);		    
+		if (version_compare(JVERSION,'1.6.0','ge')) {				    
 			$params = new JRegistry( $plugin->params );
-			$path = JPATH_SITE . DS . 'plugins' . DS . 'system' . DS . 'dbug' . DS . 'dbug' . DS . 'debug.php';
+			$path = JPATH_SITE . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'debug.php';
 		} else {
 		    // Joomla! 1.5 code here
 		   $params = new JParameter( $plugin->params );
@@ -43,7 +42,8 @@ class plgSystemDbug extends JPlugin {
 			}
 		}	
 	}
-	private function includeFile($params) {
+
+	private static function includeFile($params) {
 		$type = $params->def('type', 'all');		
 		$allow = false;
 		switch($type) {
@@ -81,7 +81,7 @@ class plgSystemDbug extends JPlugin {
 		return $allow;
 	}
 
-	private function getRealIpAddr() {
+	private static function getRealIpAddr() {
 		if (!empty($_SERVER['HTTP_CLIENT_IP']))//check ip from share internet
 		{
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
