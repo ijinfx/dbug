@@ -3,6 +3,17 @@ dBug
 
 A Joomla debugging plugin that dumps/displays the contents of a variable in a colored tabular format. It wraps the very useful Ospinto Dbug (http://dbug.ospinto.com) script.
 
+
+How to use
+====
+<pre>
+dbug(11111, $variable);
+</pre>
+
+11111 - heading number for reference
+$variable - the vaiable to dump
+
+
 Features
 ====
 
