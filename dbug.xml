@@ -7,7 +7,8 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@geraldzalsos.com</authorEmail>
 	<authorUrl>http://www.geraldzalsos.com</authorUrl>
-	<version>2.5.0</version>	
+	<version>1.0.0</version>
+	<description>PHP version of ColdFusion’s cfdump. Outputs colored and structured tabular variable information.</description>	
 	<files>
 		<filename plugin="dbug">dbug.php</filename>
 		<filename>index.html</filename>
