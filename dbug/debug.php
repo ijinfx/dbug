@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package dBug Plugin for Joomla!
+ * @version 1.00.0
+ * @author Gerald R. Zalsos
+ * @copyright (C) 2014- Gerald R. Zalsos
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+**/
+
 /*********************************************************************************************************************\
  * LAST UPDATE
  * ============

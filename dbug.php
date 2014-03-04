@@ -1,12 +1,11 @@
 <?php
 /**
- * @version 1.5/1.6
- * @package dBug
- * @author  Gerald Zalsos
- * @link    http://www.geraldzalsos.com
- * @copyright Copyright (C) 2011 GeraldZalsos.com. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- */
+ * @package dBug Plugin for Joomla!
+ * @version 1.00.0
+ * @author Gerald R. Zalsos
+ * @copyright (C) 2014- Gerald R. Zalsos
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+**/
 
 /** ensure this file is being included by a parent file */
 defined('_JEXEC') or die('Restricted access');
