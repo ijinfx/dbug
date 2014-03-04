@@ -1,9 +1,9 @@
-DBUG
+dBug
 ====
 
 A Joomla debugging plugin that dumps/displays the contents of a variable in a colored tabular format. It wraps the very useful Ospinto Dbug (http://dbug.ospinto.com) script.
 
-DBUG
+Features
 ====
 
 PHP version of ColdFusion’s cfdump.
