@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 1.5/1.6
+ * @version 2.5
  * @package dBug
  * @author  Gerald Zalsos
  * @link    http://www.geraldzalsos.com
- * @copyright Copyright (C) 2011 GeraldZalsos.com. All rights reserved.
+ * @copyright Copyright (C) 2011 geraldzalsos.com. All rights reserved.
  * @license GNU General Public License version 2 or later
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,105 +22,99 @@
  */
 
 /** ensure this file is being included by a parent file */
-defined('_JEXEC') or die('Restricted access');
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
-/** Import library dependencies */
-jimport('joomla.plugin.plugin');
 
-class plgSystemDbug extends JPlugin {
+class plgSystemDbug extends JPlugin 
+{
 
-	/**
-	 * Load the language file on instantiation.
-	 *
-	 * @var    boolean
-	 * @since  3.1
-	 */
-	protected $autoloadLanguage = true;
-	
-	public static function triggerDbug()
+	public static function triggerDbug() 
 	{
-		// Get plugin info
-    	$plugin = JPluginHelper::getPlugin('system', 'dbug'); 	
-		
-		if (version_compare(JVERSION,'1.6.0','ge')) {			    
-			$params = new JRegistry( $plugin->params );
-			$path = JPATH_SITE . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'debug.php';
-		} else {
-		    // Joomla! 1.5 code here
-		   $params = new JParameter( $plugin->params );
-		   $path = JPATH_SITE . DS . 'plugins' . DS . 'system' . DS . 'dbug' . DS . 'debug.php';
-		}
-		
-		if ($allow = plgSystemDbug::includeFile($params)) {
-			if (file_exists($path)) {
-				require_once ($path);
-			} else {
-				JError::raiseNotice(20, 'The dBug Plugin needs dBug Class');
+		if ( $allow = plgSystemDbug::includeFile() ) 
+		{
+			
+			$path = rtrim(JPATH_SITE,DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'system'.DIRECTORY_SEPARATOR.'dbug'.DIRECTORY_SEPARATOR.'dbug'.DIRECTORY_SEPARATOR.'debug.php';
+			
+			try
+			{
+				require_once($path);
 			}
-		}	
+			catch(Exception $e) 
+			{
+	 			echo "Could not load dBug class at {$path},<br/>please disable the dbug system plugin";
+	 		}		
+			
+		}
 	}
-	
-	private static function includeFile($params) {
-		$type = $params->def('type', 'all');		
+
+	private static function includeFile() 
+	{
+		$type = $this->params->get( 'type', 'all' );
 		$allow = false;
-		switch($type) {
-			case 'ip' :
-				$explodeIP = explode(',', $params->def('ip'));				
-				if(is_array($explodeIP)) {
-					$ip = '';	
-					if (!empty($_SERVER['HTTP_CLIENT_IP']))//check ip from share internet
+		switch($type) 
+		{
+			case 'ip':
+				$explodeIP = explode( ',', $this->params->get( 'ip' ) );
+				if ( is_array( $explodeIP ) ) 
+				{
+					$ip = '';
+					if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) )//check ip from share internet
 					{
 						$ip = $_SERVER['HTTP_CLIENT_IP'];
-					} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))//to check ip is pass from proxy
+					} elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )//to check ip is pass from proxy
 					{
 						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 					} else {
 						$ip = $_SERVER['REMOTE_ADDR'];
-					}					
-									
-					if(in_array($ip, $explodeIP) || $ip == '127.0.0.1') //always show localhost
+					}
+
+					if ( in_array( $ip, $explodeIP ) || $ip == '127.0.0.1' )//always show localhost
 						$allow = true;
-				}							
+				}
 				break;
 			case 'userid':
-				$explodeUID = explode(',', $params->def('userid'));
-				if(is_array($explodeUID)) {					
-					$userid = JFactory::getUser()->id;										
-					if(in_array($userid, $explodeUID)) 
+				$explodeUID = explode( ',', $this->params->get( 'userid' ) );
+				if ( is_array( $explodeUID ) ) 
+				{
+					$userid = JFactory::getUser( )->id;
+					if ( in_array( $userid, $explodeUID ) )
 						$allow = true;
-				}					
+				}
 				break;
 			case 'usertype':
-				$explodeutype = explode(',', strtolower($params->def('usertype')));
-				if(is_array($explodeutype)) {					
-					$usertype = strtolower(JFactory::getUser()->usertype) ;
-										
-					if(in_array($usertype, $explodeutype)) 
+				$explodeutype = explode( ',', strtolower( $this->params->get( 'usertype' ) ) );
+				if ( is_array( $explodeutype ) ) {
+					$usertype = strtolower( JFactory::getUser( )->usertype );
+
+					if ( in_array( $usertype, $explodeutype ) )
 						$allow = true;
-				}					
+				}
 				break;
 			case 'access':
-				$access = $params->get('access');				
-				$authorisedlevels = JFactory::getUser()->getAuthorisedViewLevels();
-										
-				if(in_array($access, $authorisedlevels)) $allow = true;
-							
-				break;	
+				$access = $this->params->get( 'access' );
+				$authorisedlevels = JFactory::getUser( )->getAuthorisedViewLevels( );
+
+				if ( in_array( $access, $authorisedlevels ) )
+					$allow = true;
+
+				break;
 			case 'usergroup':
-				$usergroups = $params->get('usergroup');				
-				$authorisedgroups = JFactory::getUser()->getAuthorisedGroups();
-							
-				if (array_intersect($authorisedgroups, $usergroups)) $allow = true;					
-			
-				break;	
-			case 'all' :
-			default :
+				$usergroups = $this->params->get( 'usergroup' );
+				$authorisedgroups = JFactory::getUser( )->getAuthorisedGroups( );
+
+				if ( array_intersect( $authorisedgroups, $usergroups ) )
+					$allow = true;
+
+				break;
+			case 'all':
+			default:
 				$allow = true;
 				break;
 		}
 
 		return $allow;
 	}
+
 }
 
 /**
@@ -130,20 +124,22 @@ class plgSystemDbug extends JPlugin {
  * @param mixed $var - the vaiable to dump
  * @return unknown
  */
-function dbug($nb = 9, $var = '', $title = '') {
-			
-	plgSystemDbug::triggerDbug();
+function dbug( $nb = 9, $var = '', $title = '' ) 
+{
 
-	if (!class_exists('Dbug'))
+	plgSystemDbug::triggerDbug( );
+
+	if ( !class_exists( 'Dbug' ) )
 		return '';
 
-	if (!is_numeric($nb)) {
+	if ( !is_numeric( $nb ) ) 
+	{
 		$var = $nb;
 		$nb = 0;
 	}
 
-	if (is_string($var))
-		$var = str_replace(array("\r\n", "\r", "\n", "\t"), array('\r\n', '\r', '\n', '\t'), $var);
+	if ( is_string( $var ) )
+		$var = str_replace( array( "\r\n", "\r", "\n", "\t" ), array( '\r\n', '\r', '\n', '\t' ), $var );
 
-	return new Dbug($var, $nb, $title);
+	return new Dbug( $var, $nb, $title );
 }
