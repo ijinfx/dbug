@@ -44,14 +44,14 @@
 				size="50"
 				/>
 				<field class="small" name="access" type="accesslevel"
-		        label="JFIELD_ACCESS_LABEL"
-		        description="JFIELD_ACCESS_DESC"		        
-		        />
-		        <field name="usergroup" type="usergroup"
-		        label="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_LABEL"
-		        description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESCRIPTION" 
-		        multiple="true" 
-		        />
+			        label="JFIELD_ACCESS_LABEL"
+			        description="JFIELD_ACCESS_DESC"		        
+			        />
+			        <field name="usergroup" type="usergroup"
+			        label="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_LABEL"
+			        description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESCRIPTION" 
+			        multiple="true" 
+			        />
 			</fieldset>
 		</fields>
 	</config>
