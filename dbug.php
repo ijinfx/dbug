@@ -27,12 +27,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class plgSystemDbug extends JPlugin 
 {
-
-	public static function triggerDbug() 
+	public function __construct(&$subject, $config = array()) 
 	{
-		if ( $allow = plgSystemDbug::includeFile() ) 
-		{
-			
+		parent::__construct($subject, $config);
+		
+		if ( $this->allowDbug() ) 
+		{			
 			$path = rtrim(JPATH_SITE,DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'system'.DIRECTORY_SEPARATOR.'dbug'.DIRECTORY_SEPARATOR.'dbug'.DIRECTORY_SEPARATOR.'debug.php';
 			
 			try
@@ -45,9 +45,15 @@ class plgSystemDbug extends JPlugin
 	 		}		
 			
 		}
-	}
-
-	private static function includeFile() 
+		
+	}	
+	
+	/**
+	 * Method to check if include the dBug library
+	 *	 
+	 * @return boolean
+	 */
+	private function allowDbug() 
 	{
 		$type = $this->params->get( 'type', 'all' );
 		$allow = false;
@@ -126,9 +132,6 @@ class plgSystemDbug extends JPlugin
  */
 function dbug( $nb = 9, $var = '', $title = '' ) 
 {
-
-	plgSystemDbug::triggerDbug( );
-
 	if ( !class_exists( 'Dbug' ) )
 		return '';
 
