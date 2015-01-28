@@ -7,7 +7,7 @@ A Joomla debugging plugin that dumps/displays the contents of a variable in a co
 How to use
 ====
 <pre>
-dbug(12345, $variable, 'QQQ');
+dbug(12345, $variable, 'Some Text Here');
 </pre>
 
 12345 - heading number for reference<br/>
