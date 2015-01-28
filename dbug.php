@@ -5,7 +5,7 @@
  * @author  Gerald Zalsos
  * @link    http://www.geraldzalsos.com
  * @copyright Copyright (C) 2011 geraldzalsos.com. All rights reserved.
- * @license GNU General Public License version 2 or later
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
