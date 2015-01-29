@@ -49,14 +49,14 @@ class plgSystemDbug extends JPlugin
 	}	
 	
 	/**
-	 * Method to check if include the dBug library
+	 * Method to check we if include the dBug library
 	 *	 
 	 * @return boolean
 	 */
 	private function allowDbug() 
 	{
-		$type = $this->params->get( 'type', 'all' );
 		$allow = false;
+		$type = $this->params->get( 'type', 'all' );		
 		switch($type) 
 		{
 			case 'ip':
