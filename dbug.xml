@@ -9,18 +9,15 @@
 	<authorUrl>http://www.github.com/ijinfx</authorUrl>
 	<version>1.0.0</version>
 	<description>PLG_SYSTEM_DBUG_XML_DESCRIPTION</description>
-		
 	<files>
 		<filename plugin="dbug">dbug.php</filename>
 		<filename>index.html</filename>
 		<folder>dbug</folder>
 	</files>
-	
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.plg_system_dbug.ini</language>
 		<language tag="en-GB">en-GB/en-GB.plg_system_dbug.sys.ini</language>
 	</languages>
-	
 	<config>
 		<fields name="params">
 
@@ -28,30 +25,30 @@
 				<field name="type" type="list" default="all" label="PLG_SYSTEM_DBUG_FIELD_TYPE_LABEL" description="PLG_SYSTEM_DBUG_FIELD_TYPE_DESCRIPTION">
 					<option value="all">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_ALL</option>
 					<option value="ip">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_IPS</option>
+					<option value="userid">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_USERIDS</option>
 					<option value="access">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_ACCESS_LEVEL</option>
 					<option value="usergroup">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_USER_GROUPS</option>
 				</field>
 				<field name="ip" type="text"
 				default=""
 				description="PLG_SYSTEM_DBUG_FIELD_IP_DESCRIPTION"
-				label="PLG_SYSTEM_DBUG_FIELD_IP_LABEL"
-				size="50"
+				label="PLG_SYSTEM_DBUG_FIELD_IP_LABEL"			
 				/>
 				<field name="userid" type="text"
 				default=""
 				description="PLG_SYSTEM_DBUG_FIELD_USERID_DESCRIPTION"
-				label="PLG_SYSTEM_DBUG_FIELD_USERID_LABEL"
-				size="50"
+				label="PLG_SYSTEM_DBUG_FIELD_USERID_LABEL"				
 				/>
-				<field class="small" name="access" type="accesslevel"
-			        label="JFIELD_ACCESS_LABEL"
-			        description="JFIELD_ACCESS_DESC"		        
-			        />
-			        <field name="usergroup" type="usergroup"
-			        label="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_LABEL"
-			        description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESCRIPTION" 
-			        multiple="true" 
-			        />
+				<field name="access" type="accesslevel"
+				label="JFIELD_ACCESS_LABEL"
+				description="JFIELD_ACCESS_DESC"
+				/>
+				<field name="usergroup" type="usergroup"
+				label="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_LABEL"
+				description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESCRIPTION"
+				multiple="true"
+				/>
+
 			</fieldset>
 		</fields>
 	</config>

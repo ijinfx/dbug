@@ -58,7 +58,7 @@ class plgSystemDbug extends JPlugin
 		switch($type)
 		{
 			case 'ip':
-				$explodeIP = explode( ',', $this->params->get( 'ip' ) );
+				$explodeIP = explode( ',', str_replace( ' ', '', $this->params->get( 'ip' ) ) );
 				if ( is_array( $explodeIP ) )
 				{
 					$ip = '';
@@ -78,21 +78,11 @@ class plgSystemDbug extends JPlugin
 				}
 				break;
 			case 'userid':
-				$explodeUID = explode( ',', $this->params->get( 'userid' ) );
+				$explodeUID = explode( ',', str_replace( ' ', '', $this->params->get( 'userid' ) ) );
 				if ( is_array( $explodeUID ) )
 				{
 					$userid = JFactory::getUser( )->id;
 					if ( in_array( $userid, $explodeUID ) )
-						$allow = true;
-				}
-				break;
-			case 'usertype':
-				$explodeutype = explode( ',', strtolower( $this->params->get( 'usertype' ) ) );
-				if ( is_array( $explodeutype ) )
-				{
-					$usertype = strtolower( JFactory::getUser( )->usertype );
-
-					if ( in_array( $usertype, $explodeutype ) )
 						$allow = true;
 				}
 				break;
@@ -125,24 +115,21 @@ class plgSystemDbug extends JPlugin
 
 /**
  * Method to dump the structure of a variable for debugging purposes
- *
- * @param int $nb - heading number for reference
- * @param mixed $var - the variable to dump
+ * @param mixed 	$var 		- the variable to dump
+ * @param int 		$nb 		- heading number for reference
+ * @param string 	$title 		- text in the header/title to better track you debugs
+ * @param boolean	$bCollapsed	- to collapsed or not the debug on load
  * @return unknown
  */
-function dbug( $nb = 9, $var = '', $title = '' )
+function dbug( $var = '', $nb = 0, $title = '', $bCollapsed = false )
 {
 	if ( !class_exists( 'Dbug' ) )
 		return '';
 
-	if ( !is_numeric( $nb ) )
-	{
-		$var = $nb;
-		$nb = 0;
-	}
+	(int) $nb;	
 
 	if ( is_string( $var ) )
 		$var = str_replace( array( "\r\n", "\r", "\n", "\t" ), array( '\r\n', '\r', '\n', '\t' ), $var );
 
-	return new dBug( $var, $nb, $title );
+	return new dBug( $var, $nb, $title, '', $bCollapsed );
 }

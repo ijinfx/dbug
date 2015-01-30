@@ -71,7 +71,7 @@ class dBug
 	{
 
 		$this->nb = $nb;
-		$this->title = $title;
+		$this->title = (string)$title;
 
 		//include js and css scripts
 		if ( !defined( 'BDBUGINIT' ) )
@@ -82,7 +82,7 @@ class dBug
 			$doc->addScript( JURI::root( true ) . '/plugins/system/dbug/dbug/debug.js' );
 		}
 		$arrAccept = array( "array", "object", "xml" );
-		
+
 		//array of variable types that can be "forced"
 		$this->bCollapsed = $bCollapsed;
 		if ( in_array( $forceType, $arrAccept ) )
@@ -115,7 +115,7 @@ class dBug
 		{
 			$arrLines = file( $arrFile["file"] );
 			$code = $arrLines[($arrFile["line"] - 1)];
-			
+
 			//find call to dBug class
 			preg_match( '/\bnew dBug\s*\(\s*(.+)\s*\);/i', $code, $arrMatches );
 			if ( count( $arrMatches ) )
@@ -159,7 +159,7 @@ class dBug
 	private function error( $type )
 	{
 		$error = "Error: Variable cannot be a";
-		
+
 		// this just checks if the type starts with a vowel or "x" and displays either "a" or "an"
 		if ( in_array( substr( $type, 0, 1 ), array( "a", "e", "i", "o", "u", "x" ) ) )
 			$error .= "n";
