@@ -24,44 +24,42 @@
 /** ensure this file is being included by a parent file */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-
-class plgSystemDbug extends JPlugin 
+class plgSystemDbug extends JPlugin
 {
-	public function __construct(&$subject, $config = array()) 
+	public function __construct( &$subject, $config = array() )
 	{
-		parent::__construct($subject, $config);
-		
-		if ( $this->allowDbug() ) 
-		{			
-			$path = rtrim(JPATH_SITE,DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'system'.DIRECTORY_SEPARATOR.'dbug'.DIRECTORY_SEPARATOR.'dbug'.DIRECTORY_SEPARATOR.'debug.php';
-			
+		parent::__construct( $subject, $config );
+
+		if ( $this->allowDbug( ) )
+		{
+			$path = rtrim( JPATH_SITE, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'debug.php';
+
 			try
 			{
-				require_once($path);
-			}
-			catch(Exception $e) 
+				require_once ($path);
+			} catch(Exception $e)
 			{
-	 			echo "Could not load dBug class at {$path},<br/>please disable the dbug system plugin";
-	 		}		
-			
+				echo "Could not load dBug class at {$path},<br/>please disable the dbug system plugin";
+			}
+
 		}
-		
-	}	
-	
+
+	}
+
 	/**
 	 * Method to check we if include the dBug library
-	 *	 
+	 *
 	 * @return boolean
 	 */
-	private function allowDbug() 
+	private function allowDbug( )
 	{
 		$allow = false;
-		$type = $this->params->get( 'type', 'all' );		
-		switch($type) 
+		$type = $this->params->get( 'type', 'all' );
+		switch($type)
 		{
 			case 'ip':
 				$explodeIP = explode( ',', $this->params->get( 'ip' ) );
-				if ( is_array( $explodeIP ) ) 
+				if ( is_array( $explodeIP ) )
 				{
 					$ip = '';
 					if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) )//check ip from share internet
@@ -70,7 +68,8 @@ class plgSystemDbug extends JPlugin
 					} elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )//to check ip is pass from proxy
 					{
 						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-					} else {
+					} else
+					{
 						$ip = $_SERVER['REMOTE_ADDR'];
 					}
 
@@ -80,7 +79,7 @@ class plgSystemDbug extends JPlugin
 				break;
 			case 'userid':
 				$explodeUID = explode( ',', $this->params->get( 'userid' ) );
-				if ( is_array( $explodeUID ) ) 
+				if ( is_array( $explodeUID ) )
 				{
 					$userid = JFactory::getUser( )->id;
 					if ( in_array( $userid, $explodeUID ) )
@@ -89,7 +88,8 @@ class plgSystemDbug extends JPlugin
 				break;
 			case 'usertype':
 				$explodeutype = explode( ',', strtolower( $this->params->get( 'usertype' ) ) );
-				if ( is_array( $explodeutype ) ) {
+				if ( is_array( $explodeutype ) )
+				{
 					$usertype = strtolower( JFactory::getUser( )->usertype );
 
 					if ( in_array( $usertype, $explodeutype ) )
@@ -127,15 +127,15 @@ class plgSystemDbug extends JPlugin
  * Method to dump the structure of a variable for debugging purposes
  *
  * @param int $nb - heading number for reference
- * @param mixed $var - the vaiable to dump
+ * @param mixed $var - the variable to dump
  * @return unknown
  */
-function dbug( $nb = 9, $var = '', $title = '' ) 
+function dbug( $nb = 9, $var = '', $title = '' )
 {
 	if ( !class_exists( 'Dbug' ) )
 		return '';
 
-	if ( !is_numeric( $nb ) ) 
+	if ( !is_numeric( $nb ) )
 	{
 		$var = $nb;
 		$nb = 0;
@@ -144,5 +144,5 @@ function dbug( $nb = 9, $var = '', $title = '' )
 	if ( is_string( $var ) )
 		$var = str_replace( array( "\r\n", "\r", "\n", "\t" ), array( '\r\n', '\r', '\n', '\t' ), $var );
 
-	return new Dbug( $var, $nb, $title );
+	return new dBug( $var, $nb, $title );
 }
