@@ -16,8 +16,8 @@ Optional<br/>
 dbug($variable, 12345, 'Some Text Here', true);
 </pre>
 
-(int) $nb			- heading number for reference
-(string) $title 	- heading text for reference
+(int) $nb			- heading number for reference<br/>
+(string) $title 	- heading text for reference<br/>
 boolean $bCollapsed	- to collapsed the debug
 
 
