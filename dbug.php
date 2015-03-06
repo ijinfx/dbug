@@ -1,24 +1,11 @@
 <?php
 /**
- * @version 2.5
- * @package dBug
- * @author  Gerald Zalsos
- * @link    http://www.geraldzalsos.com
- * @copyright Copyright (C) 2011 geraldzalsos.com. All rights reserved.
- * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @version	2.5
+ * 	@package	dbug
+ * 	@author 	Gerald R. Zalsos
+ * 	@link 		http://www.klaraontheweb.com
+ * 	@copyright 	Copyright (C) 2015 klaraontheweb.com All rights reserved.
+ * 	@license 	Licensed under the GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later
  */
 
 /** ensure this file is being included by a parent file */
@@ -30,7 +17,7 @@ class plgSystemDbug extends JPlugin
 	{
 		parent::__construct( $subject, $config );
 
-		if ( $this->allowDbug( ) )
+		if( $this->allowDbug( ) )
 		{
 			$path = rtrim( JPATH_SITE, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'dbug' . DIRECTORY_SEPARATOR . 'debug.php';
 
@@ -57,53 +44,53 @@ class plgSystemDbug extends JPlugin
 		$type = $this->params->get( 'type', 'all' );
 		switch($type)
 		{
-			case 'ip':
+			case 'ip' :
 				$explodeIP = explode( ',', str_replace( ' ', '', $this->params->get( 'ip' ) ) );
-				if ( is_array( $explodeIP ) )
+				if( is_array( $explodeIP ) )
 				{
 					$ip = '';
-					if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) )//check ip from share internet
+					if( !empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) )//check ip from share internet
 					{
-						$ip = $_SERVER['HTTP_CLIENT_IP'];
-					} elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )//to check ip is pass from proxy
+						$ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+					} elseif( !empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) )//to check ip is pass from proxy
 					{
-						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+						$ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
 					} else
 					{
-						$ip = $_SERVER['REMOTE_ADDR'];
+						$ip = $_SERVER[ 'REMOTE_ADDR' ];
 					}
 
-					if ( in_array( $ip, $explodeIP ) || $ip == '127.0.0.1' )//always show localhost
+					if( in_array( $ip, $explodeIP ) || $ip == '127.0.0.1' )//always show localhost
 						$allow = true;
 				}
 				break;
-			case 'userid':
+			case 'userid' :
 				$explodeUID = explode( ',', str_replace( ' ', '', $this->params->get( 'userid' ) ) );
-				if ( is_array( $explodeUID ) )
+				if( is_array( $explodeUID ) )
 				{
 					$userid = JFactory::getUser( )->id;
-					if ( in_array( $userid, $explodeUID ) )
+					if( in_array( $userid, $explodeUID ) )
 						$allow = true;
 				}
 				break;
-			case 'access':
+			case 'access' :
 				$access = $this->params->get( 'access' );
 				$authorisedlevels = JFactory::getUser( )->getAuthorisedViewLevels( );
 
-				if ( in_array( $access, $authorisedlevels ) )
+				if( in_array( $access, $authorisedlevels ) )
 					$allow = true;
 
 				break;
-			case 'usergroup':
+			case 'usergroup' :
 				$usergroups = $this->params->get( 'usergroup' );
 				$authorisedgroups = JFactory::getUser( )->getAuthorisedGroups( );
 
-				if ( array_intersect( $authorisedgroups, $usergroups ) )
+				if( array_intersect( $authorisedgroups, $usergroups ) )
 					$allow = true;
 
 				break;
-			case 'all':
-			default:
+			case 'all' :
+			default :
 				$allow = true;
 				break;
 		}
@@ -123,12 +110,12 @@ class plgSystemDbug extends JPlugin
  */
 function dbug( $var = '', $nb = 0, $title = '', $bCollapsed = false )
 {
-	if ( !class_exists( 'Dbug' ) )
+	if( !class_exists( 'Dbug' ) )
 		return '';
 
-	(int) $nb;	
+	(int)$nb;
 
-	if ( is_string( $var ) )
+	if( is_string( $var ) )
 		$var = str_replace( array( "\r\n", "\r", "\n", "\t" ), array( '\r\n', '\r', '\n', '\t' ), $var );
 
 	return new dBug( $var, $nb, $title, '', $bCollapsed );

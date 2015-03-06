@@ -3,7 +3,7 @@
 	<name>PLG_SYSTEM_DBUG</name>
 	<author>Gerald R. Zalsos</author>
 	<creationDate>March 2012</creationDate>
-	<copyright>Copyright (C) 2012. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2015 klaraontheweb.com All rights reserved.</copyright>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<authorEmail>ijinfx@gmail.com</authorEmail>
 	<authorUrl>http://www.github.com/ijinfx</authorUrl>
@@ -20,7 +20,6 @@
 	</languages>
 	<config>
 		<fields name="params">
-
 			<fieldset name="basic">
 				<field name="type" type="list" default="all" label="PLG_SYSTEM_DBUG_FIELD_TYPE_LABEL" description="PLG_SYSTEM_DBUG_FIELD_TYPE_DESCRIPTION">
 					<option value="all">PLG_SYSTEM_DBUG_FIELD_TYPE_OPTION_ALL</option>
@@ -32,12 +31,12 @@
 				<field name="ip" type="text"
 				default=""
 				description="PLG_SYSTEM_DBUG_FIELD_IP_DESCRIPTION"
-				label="PLG_SYSTEM_DBUG_FIELD_IP_LABEL"			
+				label="PLG_SYSTEM_DBUG_FIELD_IP_LABEL"
 				/>
 				<field name="userid" type="text"
 				default=""
 				description="PLG_SYSTEM_DBUG_FIELD_USERID_DESCRIPTION"
-				label="PLG_SYSTEM_DBUG_FIELD_USERID_LABEL"				
+				label="PLG_SYSTEM_DBUG_FIELD_USERID_LABEL"
 				/>
 				<field name="access" type="accesslevel"
 				label="JFIELD_ACCESS_LABEL"
