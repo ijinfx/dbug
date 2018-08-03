@@ -51,7 +51,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class dBug
 {
-
 	public $xmlDepth = array( );
 	public $xmlCData;
 	public $xmlSData;
@@ -73,14 +72,9 @@ class dBug
 		$this->nb = $nb;
 		$this->title = (string)$title;
 
-		//include js and css scripts
-		if( !defined( 'BDBUGINIT' ) ) //make use we only include the dbug.css and dbug.css once
-		{
-			define( "BDBUGINIT", TRUE );
-			$doc = JFactory::getDocument( );
-			$doc->addStyleSheet( JURI::root( true ) . '/plugins/system/dbug/dbug/debug.css' );
-			$doc->addScript( JURI::root( true ) . '/plugins/system/dbug/dbug/debug.js' );
-		}
+		JHtml::_('stylesheet', JURI::root() . '/plugins/system/dbug/dbug/debug.css', array('version' => 'auto'));
+		JHtml::_('script', JURI::root() . '/plugins/system/dbug/dbug/debug.js', array('version' => 'auto'));
+		
 		$arrAccept = array( "array", "object", "xml" );
 
 		//array of variable types that can be "forced"
@@ -501,5 +495,21 @@ class dBug
 		else
 			$this->xmlDData[ $count ] = $data;
 	}
+}
 
+/**
+ * Method to dump the structure of a variable for debugging purposes
+ * @param mixed 	$var 		- the variable to dump
+ * @param int 		$nb 		- heading number for reference
+ * @param string 	$title 		- text in the header/title to better track you debugs
+ * @param boolean	$bCollapsed	- to collapsed or not the debug on load
+ * @return unknown
+ */
+function dbug( $var = '', $nb = 0, $title = '', $bCollapsed = false )
+{	
+	(int)$nb;
+	if( is_string( $var ) )
+		$var = str_replace( array( "\r\n", "\r", "\n", "\t" ), array( '\r\n', '\r', '\n', '\t' ), $var );
+			
+	new dBug( $var, $nb, $title, '', $bCollapsed );
 }

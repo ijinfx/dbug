@@ -7,7 +7,7 @@
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<authorEmail>ijinfx@gmail.com</authorEmail>
 	<authorUrl>http://www.github.com/ijinfx</authorUrl>
-	<version>1.0.0</version>
+	<version>v1.0.1</version>
 	<description>PLG_SYSTEM_DBUG_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="dbug">dbug.php</filename>
@@ -39,12 +39,12 @@
 				label="PLG_SYSTEM_DBUG_FIELD_USERID_LABEL"
 				/>
 				<field name="access" type="accesslevel"
-				label="JFIELD_ACCESS_LABEL"
-				description="JFIELD_ACCESS_DESC"
+				label="PLG_SYSTEM_DBUG_FIELD_ACCESS_LABEL"
+				description="PLG_SYSTEM_DBUG_FIELD_ACCESS_DESC"
 				/>
 				<field name="usergroup" type="usergroup"
 				label="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_LABEL"
-				description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESCRIPTION"
+				description="PLG_SYSTEM_DBUG_FIELD_USER_GROUP_DESC"
 				multiple="true"
 				/>
 
